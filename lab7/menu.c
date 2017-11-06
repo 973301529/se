@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 #include "linktable.h"
 #include "menu.h"
 tLinkTable * head = NULL;
@@ -43,9 +44,24 @@ int ShowAllCmd(tLinkTable * head)
     }
     return 0;
 }
-int Help(int argc, char *argv[])
+int Help(int argc,char* argv[])
 {
-    ShowAllCmd(head);
+    int opt;
+    while((opt=getopt(argc,argv,"l:a:"))!= -1)
+    {
+        switch(opt)
+        {
+            case 'a':
+                printf("this is -a option\n");
+                ShowAllCmd(head);
+                break;
+            case 'b':
+                printf("this is -b option\n");
+                break;
+            default:
+                printf("Unknowed  option %c\n",opt);
+        }
+    }
     return 0;
 }
 
